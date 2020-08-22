@@ -76,33 +76,33 @@ namespace GAPTest.Web.Data
             });
         }
 
-        //private async Task CheckPoliciesAsync()
-        //{
-        //    if (!_context.Policies.Any())
-        //    {
-        //        AddPolicy("Aseguradora Solidaria de Colombia", "Canon de arrendamiento, cuotas de administración, servicios públicos, asistencia domiciliaria, renta, honorarios de abogado", DateTime.Parse("23/08/2020"), 12, 168000);
-        //        AddPolicy("Equidad seguros", "Incumplimiento de los cánones de arrendamiento y en el pago de la administración de los servicios públicos por el arrendatario.", DateTime.Parse("25/08/2020"), 12, 200000);
-        //        AddPolicy("Mapfre", "Canon de arrendamiento, cuotas de administración, servicios públicos, incluye asistencia domiciliaria y pérdida de arrendamiento por daños materiales.", DateTime.Parse("30/08/2020"), 24, 370000);
-        //        await _context.SaveChangesAsync();
+        private async Task CheckPoliciesAsync()
+        {
+            if (!_context.Policies.Any())
+            {
+                AddPolicy("Aseguradora Solidaria de Colombia", "Canon de arrendamiento, cuotas de administración, servicios públicos, asistencia domiciliaria, renta, honorarios de abogado", DateTime.Parse("23/08/2020"), 12, 168000);
+                AddPolicy("Equidad seguros", "Incumplimiento de los cánones de arrendamiento y en el pago de la administración de los servicios públicos por el arrendatario.", DateTime.Parse("25/08/2020"), 12, 200000);
+                AddPolicy("Mapfre", "Canon de arrendamiento, cuotas de administración, servicios públicos, incluye asistencia domiciliaria y pérdida de arrendamiento por daños materiales.", DateTime.Parse("30/08/2020"), 24, 370000);
+                await _context.SaveChangesAsync();
 
-        //    }
-        //}
+            }
+        }
 
-        //private void AddPolicy(string policyName, 
-        //    string description, 
-        //    DateTime policyStartDate,
-        //    int coveringPeriod,
-        //    double price)
-        //{
-        //    _context.Policies.Add(new Policy
-        //    {
-        //        PolicyName = policyName,
-        //        Description = description,
-        //        PolicyStartDate = policyStartDate,
-        //        CoveringPeriod = coveringPeriod,
-        //        Price = price,
-        //    });
-        //}
+        private void AddPolicy(string policyName,
+            string description,
+            DateTime policyStartDate,
+            int coveringPeriod,
+            double price)
+        {
+            _context.Policies.Add(new Policy
+            {
+                PolicyName = policyName,
+                Description = description,
+                PolicyStartDate = policyStartDate,
+                CoveringPeriod = coveringPeriod,
+                Price = price,
+            });
+        }
 
     }
 }
