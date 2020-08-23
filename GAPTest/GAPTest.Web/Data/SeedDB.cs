@@ -74,6 +74,7 @@ namespace GAPTest.Web.Data
             {
                 user = new User
                 {
+                   
                     Document = document,
                     Name = name,
                     Email = email,
