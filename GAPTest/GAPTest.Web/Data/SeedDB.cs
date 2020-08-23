@@ -80,6 +80,7 @@ namespace GAPTest.Web.Data
                     UserName = email,
                     PhoneNumber = cellPhone,
                     Address = address,
+                    SecurityStamp = Guid.NewGuid().ToString(),
                 };
 
                 await _userHelper.AddUserAsync(user, "1234");

@@ -1,6 +1,7 @@
 ﻿using GAPTest.Web.Data.Entities;
 using GAPTest.Web.Helpers;
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Threading.Tasks;
 
 namespace GAPTest.Web.Helpers
@@ -25,7 +26,16 @@ namespace GAPTest.Web.Helpers
 
         public async Task AddUserToRoleAsync(User user, string roleName)
         {
-            await _userManager.AddToRoleAsync(user, roleName);
+            try
+            {
+                await _userManager.AddToRoleAsync(user, roleName);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
         }
 
         public async Task CheckRoleAsync(string roleName)
