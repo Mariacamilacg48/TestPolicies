@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GAPTest.Web.Data.Entities.Customer>
+﻿@model IEnumerable<GAPTest.Web.Data.Entities.PolicyCustomer>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,12 +12,24 @@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CoveringPercentage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CoveringPercentage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

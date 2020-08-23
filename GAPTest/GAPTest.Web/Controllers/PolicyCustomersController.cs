@@ -10,22 +10,22 @@ using GAPTest.Web.Data.Entities;
 
 namespace GAPTest.Web.Controllers
 {
-    public class CustomersController : Controller
+    public class PolicyCustomersController : Controller
     {
         private readonly DataContext _context;
 
-        public CustomersController(DataContext context)
+        public PolicyCustomersController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: Customers
+        // GET: PolicyCustomers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Customers.ToListAsync());
+            return View(await _context.PolicyCustomer.ToListAsync());
         }
 
-        // GET: Customers/Details/5
+        // GET: PolicyCustomers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            var policyCustomer = await _context.PolicyCustomer
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            if (policyCustomer == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(policyCustomer);
         }
 
-        // GET: Customers/Create
+        // GET: PolicyCustomers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Customers/Create
+        // POST: PolicyCustomers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Id,CoveringPercentage,State")] PolicyCustomer policyCustomer)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
+                _context.Add(policyCustomer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(policyCustomer);
         }
 
-        // GET: Customers/Edit/5
+        // GET: PolicyCustomers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
+            var policyCustomer = await _context.PolicyCustomer.FindAsync(id);
+            if (policyCustomer == null)
             {
                 return NotFound();
             }
-            return View(customer);
+            return View(policyCustomer);
         }
 
-        // POST: Customers/Edit/5
+        // POST: PolicyCustomers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CoveringPercentage,State")] PolicyCustomer policyCustomer)
         {
-            if (id != customer.Id)
+            if (id != policyCustomer.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace GAPTest.Web.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
+                    _context.Update(policyCustomer);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.Id))
+                    if (!PolicyCustomerExists(policyCustomer.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace GAPTest.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(policyCustomer);
         }
 
-        // GET: Customers/Delete/5
+        // GET: PolicyCustomers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            var policyCustomer = await _context.PolicyCustomer
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            if (policyCustomer == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(policyCustomer);
         }
 
-        // POST: Customers/Delete/5
+        // POST: PolicyCustomers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            _context.Customers.Remove(customer);
+            var policyCustomer = await _context.PolicyCustomer.FindAsync(id);
+            _context.PolicyCustomer.Remove(policyCustomer);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerExists(int id)
+        private bool PolicyCustomerExists(int id)
         {
-            return _context.Customers.Any(e => e.Id == id);
+            return _context.PolicyCustomer.Any(e => e.Id == id);
         }
     }
 }

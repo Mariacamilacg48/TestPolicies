@@ -1,4 +1,5 @@
 ﻿using GAPTest.Web.Data.Entities;
+using GAPTest.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +10,88 @@ namespace GAPTest.Web.Data
     public class SeedDB
     {
         private readonly DataContext _context;
+        private readonly IUserHelper _userHelper;
 
-        public SeedDB(DataContext context)
+        public SeedDB(DataContext context, IUserHelper userHelper)
         {
             _context = context;
+            _userHelper = userHelper;
         }
 
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
+            await CheckRoles();
+            var manager = await CheckUserAsync("1017241448", "María Camila Chica Gómez", "mariacamilacg48@gmail.com", "3217901412", "Carrera 50 D. #65-62. Prado Centro", "Admin");
+            var customer = await CheckUserAsync("43735477", "María Anais Chica Gómez", "mariaannais@hotmail.com", "3216110278", "Carrera 50 D. #65-62. Prado Centro", "Customer");
             await CheckCoveringTypesAsync();
             await CheckRiskTypesAsync();
-            await CheckCustomersAsync();
+            await CheckCustomersAsync(customer);
+            await CheckManagerAsync(manager);
+            await CheckPoliciesAsync();
             //await CheckPoliciesAsync();
+        }
+        private void AddPolicy(string policyName, 
+            string description, 
+            DateTime policyStartDate, 
+            int coveringPeriod,
+            double price, 
+            Customer customer, 
+            CoveringType CoveringType, 
+            RiskType riskType)
+        {
+            _context.Policies.Add(new Policy
+            {
+                PolicyName = policyName,
+                Description = description,
+                PolicyStartDate = policyStartDate,
+                CoveringPeriod = coveringPeriod,
+                Price = price,
+                Customer = customer,
+                CoveringType = CoveringType,
+                RiskType= riskType,
+
+            });
+        }
+
+        private async Task CheckManagerAsync(User user)
+        {
+            if (!_context.Managers.Any())
+            {
+                _context.Managers.Add(new Manager { User = user });
+                await _context.SaveChangesAsync();
+            }
+        }
+        private async Task<User> CheckUserAsync(string document, 
+            string name, 
+            string email, 
+            string cellPhone, 
+            string address, 
+            string role)
+        {
+            var user = await _userHelper.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                user = new User
+                {
+                    Document = document,
+                    Name = name,
+                    Email = email,
+                    UserName = email,
+                    PhoneNumber = cellPhone,
+                    Address = address,
+                };
+
+                await _userHelper.AddUserAsync(user, "1234");
+                await _userHelper.AddUserToRoleAsync(user, role);
+            }
+
+            return user;
+        }
+        private async Task CheckRoles()
+        {
+            await _userHelper.CheckRoleAsync("Admin");
+            await _userHelper.CheckRoleAsync("Customer");
         }
 
         private async Task CheckCoveringTypesAsync()
@@ -50,32 +120,15 @@ namespace GAPTest.Web.Data
             }
         }
 
-        private async Task CheckCustomersAsync()
+        private async Task CheckCustomersAsync(User user)
         {
             if (!_context.Customers.Any())
             {
-                AddCustomer("1017241448","María Camila Chica Gómez", "3217901412", "Carrera 50D. #65-62");
-                AddCustomer("43735477", "María Anais Chica Gómez", "3216110278", "Carrera 50D. #65-62");
-                AddCustomer("41303580", "Anais Gómez de Chica", "3122304483", "Carrera 50D. #65-62");
+                _context.Customers.Add(new Customer { User = user });
                 await _context.SaveChangesAsync();
-
             }
-        }
 
-        private void AddCustomer(string document, 
-            string name, 
-            string cellphone, 
-            string address)
-        {
-            _context.Customers.Add(new Customer
-            {
-                Document = document,
-                Name = name,
-                CellPhone = cellphone,
-                Address = address,
-            });
         }
-
         private async Task CheckPoliciesAsync()
         {
             if (!_context.Policies.Any())

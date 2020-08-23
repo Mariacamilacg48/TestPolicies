@@ -10,22 +10,22 @@ using GAPTest.Web.Data.Entities;
 
 namespace GAPTest.Web.Controllers
 {
-    public class CustomersController : Controller
+    public class PoliciesController : Controller
     {
         private readonly DataContext _context;
 
-        public CustomersController(DataContext context)
+        public PoliciesController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: Customers
+        // GET: Policies
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Customers.ToListAsync());
+            return View(await _context.Policies.ToListAsync());
         }
 
-        // GET: Customers/Details/5
+        // GET: Policies/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            var policy = await _context.Policies
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            if (policy == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(policy);
         }
 
-        // GET: Customers/Create
+        // GET: Policies/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Customers/Create
+        // POST: Policies/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Id,PolicyName,Description,PolicyStartDate,CoveringPeriod,Price")] Policy policy)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
+                _context.Add(policy);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(policy);
         }
 
-        // GET: Customers/Edit/5
+        // GET: Policies/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
+            var policy = await _context.Policies.FindAsync(id);
+            if (policy == null)
             {
                 return NotFound();
             }
-            return View(customer);
+            return View(policy);
         }
 
-        // POST: Customers/Edit/5
+        // POST: Policies/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,PolicyName,Description,PolicyStartDate,CoveringPeriod,Price")] Policy policy)
         {
-            if (id != customer.Id)
+            if (id != policy.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace GAPTest.Web.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
+                    _context.Update(policy);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.Id))
+                    if (!PolicyExists(policy.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace GAPTest.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(policy);
         }
 
-        // GET: Customers/Delete/5
+        // GET: Policies/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            var policy = await _context.Policies
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            if (policy == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(policy);
         }
 
-        // POST: Customers/Delete/5
+        // POST: Policies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            _context.Customers.Remove(customer);
+            var policy = await _context.Policies.FindAsync(id);
+            _context.Policies.Remove(policy);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerExists(int id)
+        private bool PolicyExists(int id)
         {
-            return _context.Customers.Any(e => e.Id == id);
+            return _context.Policies.Any(e => e.Id == id);
         }
     }
 }
