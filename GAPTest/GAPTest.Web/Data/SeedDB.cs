@@ -125,12 +125,12 @@ namespace GAPTest.Web.Data
 
         private async Task CheckCoveringTypesAsync()
         {
-            if (!_context.CoveringType.Any())
+            if (!_context.CoveringTypes.Any())
             {
-                _context.CoveringType.Add(new CoveringType { Name = "Earthquake" });
-                _context.CoveringType.Add(new CoveringType { Name = "Fire" });
-                _context.CoveringType.Add(new CoveringType { Name = "Stole" });
-                _context.CoveringType.Add(new CoveringType { Name = "Lost" });
+                _context.CoveringTypes.Add(new CoveringType { Name = "Earthquake" });
+                _context.CoveringTypes.Add(new CoveringType { Name = "Fire" });
+                _context.CoveringTypes.Add(new CoveringType { Name = "Stole" });
+                _context.CoveringTypes.Add(new CoveringType { Name = "Lost" });
 
                 await _context.SaveChangesAsync();
             }
@@ -138,12 +138,12 @@ namespace GAPTest.Web.Data
 
         private async Task CheckRiskTypesAsync()
         {
-            if (!_context.RiskType.Any())
+            if (!_context.RiskTypes.Any())
             {
-                _context.RiskType.Add(new RiskType { Name = "Low Risk" });
-                _context.RiskType.Add(new RiskType { Name = "Medium Risk" });
-                _context.RiskType.Add(new RiskType { Name = "Medium-High" });
-                _context.RiskType.Add(new RiskType { Name = "High" });
+                _context.RiskTypes.Add(new RiskType { Name = "Low Risk" });
+                _context.RiskTypes.Add(new RiskType { Name = "Medium Risk" });
+                _context.RiskTypes.Add(new RiskType { Name = "Medium-High" });
+                _context.RiskTypes.Add(new RiskType { Name = "High" });
 
                 await _context.SaveChangesAsync();
             }

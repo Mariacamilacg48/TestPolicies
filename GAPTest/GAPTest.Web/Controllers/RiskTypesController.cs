@@ -24,7 +24,7 @@ namespace GAPTest.Web.Controllers
         // GET: RiskTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.RiskType.ToListAsync());
+            return View(await _context.RiskTypes.ToListAsync());
         }
 
         // GET: RiskTypes/Details/5
@@ -35,7 +35,7 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var riskType = await _context.RiskType
+            var riskType = await _context.RiskTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (riskType == null)
             {
@@ -75,7 +75,7 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var riskType = await _context.RiskType.FindAsync(id);
+            var riskType = await _context.RiskTypes.FindAsync(id);
             if (riskType == null)
             {
                 return NotFound();
@@ -126,7 +126,7 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var riskType = await _context.RiskType
+            var riskType = await _context.RiskTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (riskType == null)
             {
@@ -141,15 +141,15 @@ namespace GAPTest.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var riskType = await _context.RiskType.FindAsync(id);
-            _context.RiskType.Remove(riskType);
+            var riskType = await _context.RiskTypes.FindAsync(id);
+            _context.RiskTypes.Remove(riskType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RiskTypeExists(int id)
         {
-            return _context.RiskType.Any(e => e.Id == id);
+            return _context.RiskTypes.Any(e => e.Id == id);
         }
     }
 }

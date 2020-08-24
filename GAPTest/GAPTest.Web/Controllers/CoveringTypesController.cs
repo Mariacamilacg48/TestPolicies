@@ -24,7 +24,7 @@ namespace GAPTest.Web.Controllers
         // GET: CoveringTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CoveringType.ToListAsync());
+            return View(await _context.CoveringTypes.ToListAsync());
         }
 
         // GET: CoveringTypes/Details/5
@@ -35,7 +35,7 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var coveringType = await _context.CoveringType
+            var coveringType = await _context.CoveringTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (coveringType == null)
             {
@@ -75,7 +75,7 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var coveringType = await _context.CoveringType.FindAsync(id);
+            var coveringType = await _context.CoveringTypes.FindAsync(id);
             if (coveringType == null)
             {
                 return NotFound();
@@ -126,7 +126,7 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var coveringType = await _context.CoveringType
+            var coveringType = await _context.CoveringTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (coveringType == null)
             {
@@ -141,15 +141,15 @@ namespace GAPTest.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var coveringType = await _context.CoveringType.FindAsync(id);
-            _context.CoveringType.Remove(coveringType);
+            var coveringType = await _context.CoveringTypes.FindAsync(id);
+            _context.CoveringTypes.Remove(coveringType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CoveringTypeExists(int id)
         {
-            return _context.CoveringType.Any(e => e.Id == id);
+            return _context.CoveringTypes.Any(e => e.Id == id);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace GAPTest.Web.Controllers
         // GET: PolicyCustomers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PolicyCustomer.ToListAsync());
+            return View(await _context.PolicyCustomers.ToListAsync());
         }
 
         // GET: PolicyCustomers/Details/5
@@ -35,7 +35,7 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var policyCustomer = await _context.PolicyCustomer
+            var policyCustomer = await _context.PolicyCustomers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (policyCustomer == null)
             {
@@ -75,7 +75,7 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var policyCustomer = await _context.PolicyCustomer.FindAsync(id);
+            var policyCustomer = await _context.PolicyCustomers.FindAsync(id);
             if (policyCustomer == null)
             {
                 return NotFound();
@@ -126,7 +126,7 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var policyCustomer = await _context.PolicyCustomer
+            var policyCustomer = await _context.PolicyCustomers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (policyCustomer == null)
             {
@@ -141,15 +141,15 @@ namespace GAPTest.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var policyCustomer = await _context.PolicyCustomer.FindAsync(id);
-            _context.PolicyCustomer.Remove(policyCustomer);
+            var policyCustomer = await _context.PolicyCustomers.FindAsync(id);
+            _context.PolicyCustomers.Remove(policyCustomer);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PolicyCustomerExists(int id)
         {
-            return _context.PolicyCustomer.Any(e => e.Id == id);
+            return _context.PolicyCustomers.Any(e => e.Id == id);
         }
     }
 }

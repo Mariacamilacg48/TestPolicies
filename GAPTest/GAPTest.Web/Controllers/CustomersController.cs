@@ -18,12 +18,15 @@ namespace GAPTest.Web.Controllers
     {
         private readonly DataContext _context;
         private readonly IUserHelper _userHelper;
+        private readonly ICombosHelper _combosHelper;
 
         public CustomersController(DataContext context,
-            IUserHelper userHelper)
+            IUserHelper userHelper,
+            ICombosHelper combosHelper)
         {
             _context = context;
             _userHelper = userHelper;
+            _combosHelper = combosHelper;
         }
 
         // GET: Customers
@@ -189,5 +192,30 @@ namespace GAPTest.Web.Controllers
         {
             return _context.Customers.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> AddPolicy(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var customer = await _context.Customers.FindAsync(id.Value);
+               
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            var model = new PolicyViewModel
+            {
+                CustomerId = customer.Id,
+                CoveringTypes = _combosHelper.GetComboCoveringTypes(),
+                RiskTypes = _combosHelper.GetComboRiskTypes(),
+            };
+
+            return View(model);
+        }
+
     }
 }
