@@ -6,7 +6,7 @@ namespace GAPTest.Web.Helpers
 {
     public interface IConverterHelper
     {
-        Task<Policy> ToPolicyAsync(PolicyViewModel model);
+        Task<Policy> ToPolicyAsync(PolicyViewModel model, bool IsNew);
         PolicyViewModel ToPolicyViewModel(Policy policy);
     }
 }

@@ -226,11 +226,15 @@ namespace GAPTest.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var policy = await _converterHelper.ToPolicyAsync(model);
+                var policy = await _converterHelper.ToPolicyAsync(model, true);
                 _context.Policies.Add(policy);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Customers", new { @id = model.CustomerId});
             }
+
+            model.CoveringTypes = _combosHelper.GetComboCoveringTypes();
+            model.RiskTypes = _combosHelper.GetComboRiskTypes();
+
             return View(model);
         }
 
@@ -259,13 +263,37 @@ namespace GAPTest.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var policy = await _converterHelper.ToPolicyAsync(model);
+                var policy = await _converterHelper.ToPolicyAsync(model, false);
                 _context.Policies.Update(policy);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Customers", new { @id = model.CustomerId });
             }
 
+            model.CoveringTypes = _combosHelper.GetComboCoveringTypes();
+            model.RiskTypes = _combosHelper.GetComboRiskTypes();
+
             return View(model);
+        }
+
+        public async Task<IActionResult> DeletePolicy(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var policy = await _context.Policies
+                .Include(p => p.Customer)
+                .FirstOrDefaultAsync(p => p.Id == id.Value);
+
+            if (policy == null)
+            {
+                return NotFound();
+            }
+
+            _context.Policies.Remove(policy);
+            await _context.SaveChangesAsync();
+            return RedirectToAction($"{nameof(Details)}/{policy.Customer.Id}");
         }
 
     }

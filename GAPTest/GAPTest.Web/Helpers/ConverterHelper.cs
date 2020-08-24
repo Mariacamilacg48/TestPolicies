@@ -19,13 +19,14 @@ namespace GAPTest.Web.Helpers
             _dataContext = dataContext;
             _combosHelper = combosHelper;
         }
-        public async Task<Policy> ToPolicyAsync(PolicyViewModel model)
+        public async Task<Policy> ToPolicyAsync(PolicyViewModel model, bool IsNew)
         {
-            return new Policy
+            var policy=  new Policy
             {
                 PolicyCustomers=model.PolicyCustomers,
                 PolicyName = model.PolicyName,
                 Description = model.Description,
+                Id = IsNew ? 0 : model.Id,
                 PolicyStartDate = model.PolicyStartDate,
                 CoveringPeriod = model.CoveringPeriod,
                 Price = model.Price,
@@ -33,6 +34,8 @@ namespace GAPTest.Web.Helpers
                 RiskType = await _dataContext.RiskTypes.FindAsync(model.RiskTypeId),
                 Customer = await _dataContext.Customers.FindAsync(model.CustomerId),
             };
+
+            return policy;
         }
 
         public PolicyViewModel ToPolicyViewModel(Policy policy)
