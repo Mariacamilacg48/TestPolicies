@@ -234,5 +234,39 @@ namespace GAPTest.Web.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> EditPolicy(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var policy = await _context.Policies
+                .Include(p => p.Customer)
+                .Include(p => p.CoveringType)
+                .Include (p => p.RiskType)
+                .FirstOrDefaultAsync(p => p.Id==id);
+
+            if (policy == null)
+            {
+                return NotFound();
+            }
+
+            return View(_converterHelper.ToPolicyViewModel(policy));
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditPolicy(PolicyViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var policy = await _converterHelper.ToPolicyAsync(model);
+                _context.Policies.Update(policy);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Details", "Customers", new { @id = model.CustomerId });
+            }
+
+            return View(model);
+        }
+
     }
 }

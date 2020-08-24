@@ -1,50 +1,66 @@
 ﻿@model GAPTest.Web.Models.PolicyViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h2>Create</h2>
+<h2>Edit</h2>
 
 <h4>Policy</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
+        <form asp-action="EditPolicy" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CustomerId" />
             <div class="form-group">
                 <label asp-for="PolicyName" class="control-label"></label>
                 <input asp-for="PolicyName" class="form-control" />
                 <span asp-validation-for="PolicyName" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="PolicyStartDate" class="control-label"></label>
-                <input asp-for="PolicyStartDate" class="form-control" />
-                <span asp-validation-for="PolicyStartDate" class="text-danger"></span>
+                <label asp-for="CoveringTypeId" class="control-label"></label>
+                <select asp-for="CoveringTypeId" asp-items="Model.CoveringTypes" class="form-control"></select>
+                <span asp-validation-for="CoveringTypeId" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="RiskTypeId" class="control-label"></label>
+                <select asp-for="RiskTypeId" asp-items="Model.RiskTypes" class="form-control"></select>
+                <span asp-validation-for="RiskTypeId" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="CoveringPeriod" class="control-label"></label>
                 <input asp-for="CoveringPeriod" class="form-control" />
                 <span asp-validation-for="CoveringPeriod" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="PolicyStartDate" class="control-label"></label>
+                <input asp-for="PolicyStartDate" class="form-control" />
+                <span asp-validation-for="PolicyStartDate" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Details" asp-route-id="@Model.CustomerId" class="btn btn-success">Back to Customer</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
