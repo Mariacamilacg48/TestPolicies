@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using GAPTest.Web.Data;
 using GAPTest.Web.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
+using GAPTest.Web.Models;
+using GAPTest.Web.Helpers;
 
 namespace GAPTest.Web.Controllers
 {
@@ -15,16 +17,21 @@ namespace GAPTest.Web.Controllers
     public class CustomersController : Controller
     {
         private readonly DataContext _context;
+        private readonly IUserHelper _userHelper;
 
-        public CustomersController(DataContext context)
+        public CustomersController(DataContext context,
+            IUserHelper userHelper)
         {
             _context = context;
+            _userHelper = userHelper;
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Customers.ToListAsync());
+            return View(_context.Customers
+                .Include(o => o.User)
+                .Include (o => o.Policies));
         }
 
         // GET: Customers/Details/5
@@ -36,6 +43,11 @@ namespace GAPTest.Web.Controllers
             }
 
             var customer = await _context.Customers
+                .Include(o => o.User)
+                .Include(o => o.Policies)
+                .ThenInclude (c => c.CoveringType)
+                .Include(o => o.Policies)
+                .ThenInclude(r => r.RiskType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
             {
@@ -56,15 +68,41 @@ namespace GAPTest.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Customer customer)
+        public async Task<IActionResult> Create(AddUserViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var user = new User
+                {
+                    Name = model.Name,
+                    Document = model.Document,
+                    PhoneNumber = model.CellPhone,
+                    Address = model.Address,
+                    Email = model.Username,
+                    UserName = model.Username
+                };
+
+                var response = await _userHelper.AddUserAsync(user, model.Password);
+
+                if (response.Succeeded)
+                {
+                    var userInDB = await _userHelper.GetUserByEmailAsync(model.Username);
+                    await _userHelper.AddUserToRoleAsync(userInDB, "Customer");
+
+                    var customer = new Customer
+                    {
+                        PolicyCustomers = new List<PolicyCustomer>(),
+                        Policies = new List<Policy>(),
+                        User = userInDB
+                    };
+
+                    _context.Customers.Add(customer);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ModelState.AddModelError(string.Empty, response.Errors.FirstOrDefault().Description);
             }
-            return View(customer);
+            return View(model);
         }
 
         // GET: Customers/Edit/5
