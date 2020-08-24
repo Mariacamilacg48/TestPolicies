@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GAPTest.Web.Data;
 using GAPTest.Web.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GAPTest.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PolicyCustomersController : Controller
     {
         private readonly DataContext _context;

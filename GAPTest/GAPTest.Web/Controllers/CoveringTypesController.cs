@@ -12,22 +12,22 @@ using Microsoft.AspNetCore.Authorization;
 namespace GAPTest.Web.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class CustomersController : Controller
+    public class CoveringTypesController : Controller
     {
         private readonly DataContext _context;
 
-        public CustomersController(DataContext context)
+        public CoveringTypesController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: Customers
+        // GET: CoveringTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Customers.ToListAsync());
+            return View(await _context.CoveringType.ToListAsync());
         }
 
-        // GET: Customers/Details/5
+        // GET: CoveringTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,39 +35,39 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            var coveringType = await _context.CoveringType
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            if (coveringType == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(coveringType);
         }
 
-        // GET: Customers/Create
+        // GET: CoveringTypes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Customers/Create
+        // POST: CoveringTypes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Id,Name")] CoveringType coveringType)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
+                _context.Add(coveringType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(coveringType);
         }
 
-        // GET: Customers/Edit/5
+        // GET: CoveringTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,22 +75,22 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
+            var coveringType = await _context.CoveringType.FindAsync(id);
+            if (coveringType == null)
             {
                 return NotFound();
             }
-            return View(customer);
+            return View(coveringType);
         }
 
-        // POST: Customers/Edit/5
+        // POST: CoveringTypes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] CoveringType coveringType)
         {
-            if (id != customer.Id)
+            if (id != coveringType.Id)
             {
                 return NotFound();
             }
@@ -99,12 +99,12 @@ namespace GAPTest.Web.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
+                    _context.Update(coveringType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.Id))
+                    if (!CoveringTypeExists(coveringType.Id))
                     {
                         return NotFound();
                     }
@@ -115,10 +115,10 @@ namespace GAPTest.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(coveringType);
         }
 
-        // GET: Customers/Delete/5
+        // GET: CoveringTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,30 +126,30 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            var coveringType = await _context.CoveringType
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            if (coveringType == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(coveringType);
         }
 
-        // POST: Customers/Delete/5
+        // POST: CoveringTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            _context.Customers.Remove(customer);
+            var coveringType = await _context.CoveringType.FindAsync(id);
+            _context.CoveringType.Remove(coveringType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerExists(int id)
+        private bool CoveringTypeExists(int id)
         {
-            return _context.Customers.Any(e => e.Id == id);
+            return _context.CoveringType.Any(e => e.Id == id);
         }
     }
 }

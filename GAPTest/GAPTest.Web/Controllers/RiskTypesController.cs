@@ -12,22 +12,22 @@ using Microsoft.AspNetCore.Authorization;
 namespace GAPTest.Web.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class CustomersController : Controller
+    public class RiskTypesController : Controller
     {
         private readonly DataContext _context;
 
-        public CustomersController(DataContext context)
+        public RiskTypesController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: Customers
+        // GET: RiskTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Customers.ToListAsync());
+            return View(await _context.RiskType.ToListAsync());
         }
 
-        // GET: Customers/Details/5
+        // GET: RiskTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,39 +35,39 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            var riskType = await _context.RiskType
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            if (riskType == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(riskType);
         }
 
-        // GET: Customers/Create
+        // GET: RiskTypes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Customers/Create
+        // POST: RiskTypes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Id,Name")] RiskType riskType)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
+                _context.Add(riskType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(riskType);
         }
 
-        // GET: Customers/Edit/5
+        // GET: RiskTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,22 +75,22 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
+            var riskType = await _context.RiskType.FindAsync(id);
+            if (riskType == null)
             {
                 return NotFound();
             }
-            return View(customer);
+            return View(riskType);
         }
 
-        // POST: Customers/Edit/5
+        // POST: RiskTypes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] RiskType riskType)
         {
-            if (id != customer.Id)
+            if (id != riskType.Id)
             {
                 return NotFound();
             }
@@ -99,12 +99,12 @@ namespace GAPTest.Web.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
+                    _context.Update(riskType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.Id))
+                    if (!RiskTypeExists(riskType.Id))
                     {
                         return NotFound();
                     }
@@ -115,10 +115,10 @@ namespace GAPTest.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(riskType);
         }
 
-        // GET: Customers/Delete/5
+        // GET: RiskTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,30 +126,30 @@ namespace GAPTest.Web.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            var riskType = await _context.RiskType
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            if (riskType == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(riskType);
         }
 
-        // POST: Customers/Delete/5
+        // POST: RiskTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            _context.Customers.Remove(customer);
+            var riskType = await _context.RiskType.FindAsync(id);
+            _context.RiskType.Remove(riskType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerExists(int id)
+        private bool RiskTypeExists(int id)
         {
-            return _context.Customers.Any(e => e.Id == id);
+            return _context.RiskType.Any(e => e.Id == id);
         }
     }
 }
