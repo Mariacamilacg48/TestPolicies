@@ -19,14 +19,18 @@ namespace GAPTest.Web.Controllers
         private readonly DataContext _context;
         private readonly IUserHelper _userHelper;
         private readonly ICombosHelper _combosHelper;
+        private readonly IConverterHelper _converterHelper;
 
         public CustomersController(DataContext context,
             IUserHelper userHelper,
-            ICombosHelper combosHelper)
+            ICombosHelper combosHelper,
+            IConverterHelper converterHelper
+            )
         {
             _context = context;
             _userHelper = userHelper;
             _combosHelper = combosHelper;
+            _converterHelper = converterHelper;
         }
 
         // GET: Customers
@@ -214,6 +218,19 @@ namespace GAPTest.Web.Controllers
                 RiskTypes = _combosHelper.GetComboRiskTypes(),
             };
 
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPolicy(PolicyViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var policy = await _converterHelper.ToPolicyAsync(model);
+                _context.Policies.Add(policy);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Details", "Customers", new { @id = model.CustomerId});
+            }
             return View(model);
         }
 
