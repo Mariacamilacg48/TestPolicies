@@ -9,8 +9,6 @@ namespace GAPTest.Web.Data.Entities
 {
     public class User : IdentityUser 
     {
-        
-
         [Required(ErrorMessage = "The field {0} is mandatory.")]
         [MaxLength(30, ErrorMessage = "The {0} field can not have more than {1} characters.")]
         public string Document { get; set; }
