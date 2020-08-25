@@ -127,21 +127,12 @@ namespace GAPTest.Web.Controllers
             }
 
             var riskType = await _context.RiskTypes
+                .Include(pt => pt.Policies)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (riskType == null)
             {
                 return NotFound();
             }
-
-            return View(riskType);
-        }
-
-        // POST: RiskTypes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var riskType = await _context.RiskTypes.FindAsync(id);
             _context.RiskTypes.Remove(riskType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

@@ -21,5 +21,8 @@ namespace GAPTest.Web.Helpers
         Task<bool> IsUserInRoleAsync(User user, string roleName);
         Task<SignInResult> LoginAsync(LoginViewModel model);
         Task LogoutAsync();
+        Task<bool> DeleteUserAsync(string email);
+        Task<IdentityResult> UpdateUserAsync(User user);
+
     }
 }
