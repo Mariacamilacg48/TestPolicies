@@ -23,7 +23,6 @@ namespace GAPTest.Web.Helpers
         {
             var policy=  new Policy
             {
-                PolicyCustomers=model.PolicyCustomers,
                 PolicyName = model.PolicyName,
                 Description = model.Description,
                 Id = IsNew ? 0 : model.Id,
@@ -42,7 +41,6 @@ namespace GAPTest.Web.Helpers
         {
             return new PolicyViewModel
             {
-                PolicyCustomers = policy.PolicyCustomers,
                 PolicyName = policy.PolicyName,
                 Description = policy.Description,
                 PolicyStartDate = policy.PolicyStartDate,

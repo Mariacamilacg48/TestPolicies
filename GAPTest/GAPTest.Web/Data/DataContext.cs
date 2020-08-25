@@ -19,7 +19,6 @@ namespace GAPTest.Web.Data
         public DbSet<Policy> Policies{ get; set; }
         public DbSet<CoveringType> CoveringTypes { get; set; }
         public DbSet<RiskType> RiskTypes { get; set; }
-        public DbSet<PolicyCustomer> PolicyCustomers { get; set; }
 
     }
     

@@ -13,6 +13,5 @@ namespace GAPTest.Web.Data.Entities
         public User User { get; set; }
         public ICollection<Policy> Policies { get; set; }
 
-        public ICollection<PolicyCustomer> PolicyCustomers { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -33,13 +34,19 @@ namespace GAPTest.Web.Data.Entities
         [Required(ErrorMessage = "The field {0} is mandatory.")]
         public double Price { get; set; }
 
+        [Display(Name = "Covering Percentaje")]
+        [Required(ErrorMessage = "The field {0} is mandatory.")]
+       
+        public float CoveringPercentage { get; set; }
+
+        public bool State { get; set; }
+
         public CoveringType CoveringType { get; set; }
 
         public RiskType RiskType{ get; set; }
 
         public Customer Customer { get; set; }
 
-        public ICollection<PolicyCustomer> PolicyCustomers { get; set; }
-
     }
+
 }

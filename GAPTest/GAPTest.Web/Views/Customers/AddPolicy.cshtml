@@ -12,7 +12,7 @@
     <div class="col-md-4">
         <form asp-action="AddPolicy" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="CustomerId"/>
+            <input type="hidden" asp-for="CustomerId" />
 
             <div class="form-group">
                 <label asp-for="PolicyName" class="control-label"></label>
@@ -22,7 +22,7 @@
 
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control"/>
+                <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
@@ -37,7 +37,7 @@
                 <select asp-for="RiskTypeId" asp-items="Model.RiskTypes" class="form-control"></select>
                 <span asp-validation-for="RiskTypeId" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group">
                 <label asp-for="CoveringPeriod" class="control-label"></label>
                 <input asp-for="CoveringPeriod" class="form-control" />
@@ -52,9 +52,18 @@
 
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control"/>
+                <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="CoveringPercentage" class="control-label"></label>
+                <input asp-for="CoveringPercentage" class="form-control" type="hidden" />
+                <span asp-validation-for="CoveringPercentage" class="text-danger"></span>
+            </div>
+
+            <span asp-validation-for="State" class="text-warning"></span>
+
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

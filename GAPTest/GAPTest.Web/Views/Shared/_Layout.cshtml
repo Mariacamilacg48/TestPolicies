@@ -36,10 +36,9 @@
 
                     @if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                    <li><a asp-area="" asp-controller="Customers" asp-action="Index">Customers</a></li>
+                    <li><a asp-area="" asp-controller="Customers" asp-action="Index">Customers and Policies</a></li>
                     <li><a asp-area="" asp-controller="Policies" asp-action="Index">Policies</a></li>
                     <li><a asp-area="" asp-controller="Managers" asp-action="Index">Managers</a></li>
-                    <li><a asp-area="" asp-controller="PolicyCustomers" asp-action="Index">Customer's Policies</a></li>
                     <li><a asp-area="" asp-controller="CoveringTypes" asp-action="Index">Covering Types</a></li>
                     <li><a asp-area="" asp-controller="RiskTypes" asp-action="Index">Risk Types</a></li>
                     }

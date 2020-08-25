@@ -56,7 +56,7 @@ namespace GAPTest.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PolicyName,Description,PolicyStartDate,CoveringPeriod,Price")] Policy policy)
+        public async Task<IActionResult> Create([Bind("Id,PolicyName,Description,PolicyStartDate,CoveringPeriod,Price,CoveringPercentage,State")] Policy policy)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace GAPTest.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PolicyName,Description,PolicyStartDate,CoveringPeriod,Price")] Policy policy)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,PolicyName,Description,PolicyStartDate,CoveringPeriod,Price,CoveringPercentage,State")] Policy policy)
         {
             if (id != policy.Id)
             {

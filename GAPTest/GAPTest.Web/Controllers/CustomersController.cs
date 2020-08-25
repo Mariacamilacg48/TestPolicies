@@ -20,17 +20,20 @@ namespace GAPTest.Web.Controllers
         private readonly IUserHelper _userHelper;
         private readonly ICombosHelper _combosHelper;
         private readonly IConverterHelper _converterHelper;
+        private readonly ILogicHelper _logicHelper;
 
         public CustomersController(DataContext context,
             IUserHelper userHelper,
             ICombosHelper combosHelper,
-            IConverterHelper converterHelper
+            IConverterHelper converterHelper,
+            ILogicHelper logicHelper
             )
         {
             _context = context;
             _userHelper = userHelper;
             _combosHelper = combosHelper;
             _converterHelper = converterHelper;
+            _logicHelper = logicHelper;
         }
 
         // GET: Customers
@@ -98,7 +101,6 @@ namespace GAPTest.Web.Controllers
 
                     var customer = new Customer
                     {
-                        PolicyCustomers = new List<PolicyCustomer>(),
                         Policies = new List<Policy>(),
                         User = userInDB
                     };
@@ -224,6 +226,18 @@ namespace GAPTest.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPolicy(PolicyViewModel model)
         {
+            
+            var isHigh =  _logicHelper.IsHighRiskType(model.RiskTypeId);
+
+            if (isHigh)
+            {
+                model.CoveringPercentage = 30;
+            }
+            else
+            {
+                model.CoveringPercentage = 100;
+            }
+
             if (ModelState.IsValid)
             {
                 var policy = await _converterHelper.ToPolicyAsync(model, true);
@@ -231,6 +245,7 @@ namespace GAPTest.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Customers", new { @id = model.CustomerId});
             }
+            
 
             model.CoveringTypes = _combosHelper.GetComboCoveringTypes();
             model.RiskTypes = _combosHelper.GetComboRiskTypes();

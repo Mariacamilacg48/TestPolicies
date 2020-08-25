@@ -57,6 +57,14 @@
             </div>
 
             <div class="form-group">
+                <label asp-for="CoveringPercentage" class="control-label"></label>
+                <input asp-for="CoveringPercentage" class="form-control" type="hidden"/>
+                <span asp-validation-for="CoveringPercentage" class="text-danger"></span>
+            </div>
+
+            <span asp-validation-for="State" class="text-warning"></span>
+
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
                 <a asp-action="Details" asp-route-id="@Model.CustomerId" class="btn btn-success">Back to Customer</a>
             </div>
