@@ -115,5 +115,36 @@ namespace GAPTest.Web.Controllers.API
             return Ok(new Response<object> { IsSuccess = true,
             Message="Created"}); 
         }
+
+        [HttpPut]
+        [Route("PutUser")]
+        public async Task<IActionResult> PutUser(UserRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _userHelper.GetUserByEmailAsync(request.Email);
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
+
+            user.Name = request.Name;
+            user.Document = request.Document;
+            user.Address = request.Address;
+            user.PhoneNumber = request.CellPhone;
+
+            var respose = await _userHelper.UpdateUserAsync(user);
+
+            if (!respose.Succeeded)
+            {
+                return BadRequest(respose.Errors.FirstOrDefault().Description);
+            }
+
+            var updatedUser = await _userHelper.GetUserByEmailAsync(request.Email);
+            return Ok(updatedUser);
+        }
     }
 }
