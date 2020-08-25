@@ -13,7 +13,6 @@ namespace GAPTest.Common.Models
         public int CoveringPeriod { get; set; }
         public double Price { get; set; }
         public bool State { get; set; }
-        public float CoveringPercentage { get; set; }
         public string CoveringType { get; set; }
         public string RiskType { get; set; }
 

@@ -29,6 +29,7 @@ namespace GAPTest.Web.Helpers
                 PolicyStartDate = model.PolicyStartDate,
                 CoveringPeriod = model.CoveringPeriod,
                 Price = model.Price,
+                State=model.State,
                 CoveringType = await _dataContext.CoveringTypes.FindAsync(model.CoveringTypeId),
                 RiskType = await _dataContext.RiskTypes.FindAsync(model.RiskTypeId),
                 Customer = await _dataContext.Customers.FindAsync(model.CustomerId),
@@ -51,9 +52,9 @@ namespace GAPTest.Web.Helpers
                 CoveringTypes = _combosHelper.GetComboCoveringTypes(),
                 RiskTypes = _combosHelper.GetComboRiskTypes(),
                 CustomerId = policy.Customer.Id,
+                State=policy.State,
                 CoveringTypeId = policy.CoveringType.Id,
-                RiskTypeId = policy.RiskType.Id,
-                
+                RiskTypeId = policy.RiskType.Id,                
             };
         }
     }

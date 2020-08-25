@@ -45,18 +45,17 @@ namespace GAPTest.Web.Controllers.API
                 Document = customer.User.Document,
                 Address = customer.User.Address,
                 CellPhone = customer.User.PhoneNumber,
-                Policies = customer.Policies.Select(p => new PolicyResponse
+                Policies = customer.Policies.Select(o => new PolicyResponse
                 {
-                    PolicyName = p.PolicyName,
-                    Id = p.Id,
-                    Description = p.Description,
-                    PolicyStartDate = p.PolicyStartDate,
-                    CoveringPeriod = p.CoveringPeriod,
-                    CoveringPercentage=p.CoveringPercentage,
-                    Price = p.Price,
-                    State = p.State,
-                    CoveringType = p.CoveringType.Name,
-                    RiskType = p.RiskType.Name,
+                    Id = o.Id,
+                    PolicyName = o.PolicyName,
+                    Description = o.Description,
+                    PolicyStartDate = o.PolicyStartDate,
+                    CoveringPeriod = o.CoveringPeriod,
+                    Price = o.Price,
+                    State = o.State,
+                    CoveringType = o.CoveringType.Name,
+                    RiskType = o.RiskType.Name,
                 }).ToList()
             };
 

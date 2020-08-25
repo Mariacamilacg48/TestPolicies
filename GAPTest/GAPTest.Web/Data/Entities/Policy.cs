@@ -25,7 +25,6 @@ namespace GAPTest.Web.Data.Entities
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime PolicyStartDate { get; set; }
 
-
         [Display(Name = "Covering Period defined in motnhs")]
         [Required(ErrorMessage = "The field {0} is mandatory.")]
         public int CoveringPeriod { get; set; }
