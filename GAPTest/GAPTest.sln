@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29123.89
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GAPTest.Common", "GAPTest.Common\GAPTest.Common.csproj", "{8282560A-5133-4A6C-8A7B-6F0CFACD9C33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GAPTest.Common", "GAPTest.Common\GAPTest.Common.csproj", "{8282560A-5133-4A6C-8A7B-6F0CFACD9C33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GAPTest.Web", "GAPTest.Web\GAPTest.Web.csproj", "{269BB0DF-CC6C-466C-BEB8-3B86785FB9BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GAPTest.Web", "GAPTest.Web\GAPTest.Web.csproj", "{269BB0DF-CC6C-466C-BEB8-3B86785FB9BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GAPTest.Tests", "GAPTest.Tests\GAPTest.Tests.csproj", "{91DED669-5502-4FCD-99C0-B728F1218BFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{269BB0DF-CC6C-466C-BEB8-3B86785FB9BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{269BB0DF-CC6C-466C-BEB8-3B86785FB9BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{269BB0DF-CC6C-466C-BEB8-3B86785FB9BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91DED669-5502-4FCD-99C0-B728F1218BFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91DED669-5502-4FCD-99C0-B728F1218BFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91DED669-5502-4FCD-99C0-B728F1218BFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91DED669-5502-4FCD-99C0-B728F1218BFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
