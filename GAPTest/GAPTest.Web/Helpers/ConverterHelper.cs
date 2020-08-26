@@ -1,4 +1,5 @@
-﻿using GAPTest.Web.Data;
+﻿using GAPTest.Common.Models;
+using GAPTest.Web.Data;
 using GAPTest.Web.Data.Entities;
 using GAPTest.Web.Models;
 using System;
@@ -55,6 +56,26 @@ namespace GAPTest.Web.Helpers
                 State=policy.State,
                 CoveringTypeId = policy.CoveringType.Id,
                 RiskTypeId = policy.RiskType.Id,                
+            };
+        }
+
+        public PolicyResponse ToPolicyResponse(Policy policy)
+        {
+            if (policy == null)
+            {
+                return null;
+            }
+
+            return new PolicyResponse
+            {
+                Id=policy.Id,
+                PolicyName = policy.PolicyName,
+                Description = policy.Description,
+                PolicyStartDate = policy.PolicyStartDate,
+                CoveringPeriod = policy.CoveringPeriod,
+                Price = policy.Price,
+                CoveringType = policy.CoveringType.Name,
+                RiskType = policy.RiskType.Name,
             };
         }
     }
